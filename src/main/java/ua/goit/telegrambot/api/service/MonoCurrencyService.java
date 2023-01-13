@@ -3,6 +3,9 @@ package ua.goit.telegrambot.api.service;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import ua.goit.telegrambot.api.CurrencyJsonUpdate;
 import ua.goit.telegrambot.api.dto.Currency;
 import ua.goit.telegrambot.api.utils.Utilities;
@@ -11,8 +14,10 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class MonoCurrencyService implements CurrencyService {
 
     @Override
@@ -20,6 +25,10 @@ public class MonoCurrencyService implements CurrencyService {
 
         //take json from file
         String takeJsonFromFile = Utilities.writeFromJsonFile(CurrencyJsonUpdate.getABSOLUTE_PATH_MONO());
+        log.info(takeJsonFromFile);
+
+        log.info(takeJsonFromFile);
+
 
         //replace for enum Currency
         String replaceJson = takeJsonFromFile

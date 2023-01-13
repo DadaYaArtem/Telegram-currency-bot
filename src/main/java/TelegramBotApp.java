@@ -25,6 +25,7 @@ public class TelegramBotApp {
 
         CurrencyJsonUpdate fileCurrencyJsonUpdate = new CurrencyJsonUpdate();
         fileCurrencyJsonUpdate.run();
+
         Scheduler scheduler = new Scheduler();
         Thread thread = new Thread(scheduler);
         thread.run();
