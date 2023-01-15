@@ -5,7 +5,6 @@ import ua.goit.telegrambot.api.dto.Currency;
 import ua.goit.telegrambot.api.service.MonoCurrencyService;
 import ua.goit.telegrambot.api.service.NBUCurrencyService;
 import ua.goit.telegrambot.api.service.PrivateBankCurrencyService;
-import ua.goit.telegrambot.api.utils.Utilities;
 
 public class GetRatesTest {
     @SneakyThrows

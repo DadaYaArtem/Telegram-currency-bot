@@ -1,12 +1,10 @@
 package ua.goit.telegrambot.api.utils;
 
 import org.jsoup.Jsoup;
-import ua.goit.telegrambot.api.CurrencyJsonUpdate;
 
 import java.io.*;
-import java.util.concurrent.TimeUnit;
 
-public final class Utilities {
+public final class APIUtilities {
 
     //Get request from API
     public static String getAPIRequest(String url) {

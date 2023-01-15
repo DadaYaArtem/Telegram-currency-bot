@@ -2,8 +2,8 @@ package ua.goit.telegrambot.api;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import ua.goit.telegrambot.api.utils.Utilities;
-import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.Bank;
+import ua.goit.telegrambot.api.dto.BankNAME;
+import ua.goit.telegrambot.api.utils.APIUtilities;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -57,7 +57,7 @@ public class CurrencyJsonUpdate implements Runnable {
                 File file = new File(filePath);
                 checkFileExists(file);
                 try (FileWriter writer = new FileWriter(file)) {
-                    writer.write(Utilities.getAPIRequest(bankURL));
+                    writer.write(APIUtilities.getAPIRequest(bankURL));
                 } catch (IOException e) {
                     System.err.println(e.getMessage());
                 }
@@ -90,11 +90,4 @@ public class CurrencyJsonUpdate implements Runnable {
             }
         }
     }
-
-    public enum BankNAME {
-        NBU,
-        MONO,
-        PRIVAT
-    }
-
 }

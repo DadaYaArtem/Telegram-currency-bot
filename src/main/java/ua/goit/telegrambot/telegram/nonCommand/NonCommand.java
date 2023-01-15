@@ -3,6 +3,7 @@ package ua.goit.telegrambot.telegram.nonCommand;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import ua.goit.telegrambot.api.dto.BankNAME;
 import ua.goit.telegrambot.api.service.MonoCurrencyService;
 import ua.goit.telegrambot.api.service.NBUCurrencyService;
 import ua.goit.telegrambot.api.service.PrivateBankCurrencyService;
@@ -84,28 +85,28 @@ public class NonCommand {
                 break;
             //Bank setup for user Eng
             case "setBankMonoBank":
-                service.setBank(chatId,"monobank");
+                service.setBank(chatId, BankNAME.MONO);
                 answer = new StartEngCommand(chatId, userName).getMessage();
                 break;
             case "setBankNBU":
-                service.setBank(chatId,"nbu");
+                service.setBank(chatId,BankNAME.NBU);
                 answer = new StartEngCommand(chatId, userName).getMessage();
                 break;
             case "setBankPrivat":
-                service.setBank(chatId,"privat");
+                service.setBank(chatId,BankNAME.PRIVAT);
                 answer = new StartEngCommand(chatId, userName).getMessage();
                 break;
             //Bank setup for user Ukr
             case "setBankMonoBankUkr":
-                service.setBank(chatId,"monobank");
+                service.setBank(chatId,BankNAME.MONO);
                 answer = new StartUkrCommand(chatId, userName).getMessage();
                 break;
             case "setBankNbuUkr":
-                service.setBank(chatId,"nbu");
+                service.setBank(chatId,BankNAME.NBU);
                 answer = new StartUkrCommand(chatId, userName).getMessage();
                 break;
             case "setBankPrivatUkr":
-                service.setBank(chatId,"privat");
+                service.setBank(chatId,BankNAME.PRIVAT);
                 answer = new StartUkrCommand(chatId, userName).getMessage();
                 break;
             //Rounding setup for user Eng

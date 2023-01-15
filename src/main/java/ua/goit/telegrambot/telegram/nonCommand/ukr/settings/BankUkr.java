@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import ua.goit.telegrambot.api.dto.BankNAME;
 import ua.goit.telegrambot.telegram.nonCommand.GeneralBotCommand;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class BankUkr implements GeneralBotCommand {
-    String checkout;
+    BankNAME checkout;
     Long chatId;
     String userName;
 
@@ -27,19 +28,19 @@ public class BankUkr implements GeneralBotCommand {
 
         InlineKeyboardButton monoBank = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("monobank") ? "✅ МоноБанк" : "МоноБанк")
+                .text(this.checkout == BankNAME.MONO ? "✅ МоноБанк" : "МоноБанк")
                 .callbackData("setBankMonoBankUkr")
                 .build();
 
         InlineKeyboardButton nbu = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("nbu") ? "✅ НБУ" : "НБУ")
+                .text(this.checkout == BankNAME.NBU ? "✅ НБУ" : "НБУ")
                 .callbackData("setBankNbuUkr")
                 .build();
 
         InlineKeyboardButton privat = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("privat") ? "✅ ПриватБанк" : "ПриватБанк")
+                .text(this.checkout == BankNAME.PRIVAT ? "✅ ПриватБанк" : "ПриватБанк")
                 .callbackData("setBankPrivatUkr")
                 .build();
 

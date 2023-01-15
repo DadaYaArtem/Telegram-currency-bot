@@ -40,7 +40,7 @@ public class GetInfoCommand implements GeneralBotCommand {
                 .callbackData("settings")
                 .build();
 
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList();
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
         keyboardButtonsRow1.add(getInfo);
         List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList();
         keyboardButtonsRow2.add(settings);

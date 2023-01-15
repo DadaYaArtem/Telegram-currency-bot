@@ -19,7 +19,6 @@ public class StartBotCommand extends BotCommand {
 
     public StartBotCommand() {
         super("start", "Start the Bot");
-
     }
 
     UserService service = UserService.getInstance();

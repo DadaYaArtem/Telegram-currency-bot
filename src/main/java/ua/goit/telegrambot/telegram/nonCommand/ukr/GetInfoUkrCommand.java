@@ -38,7 +38,7 @@ public class GetInfoUkrCommand implements GeneralBotCommand {
                 .callbackData("settingsUkr")
                 .build();
 
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList();
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
         keyboardButtonsRow1.add(getInfo);
         List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList();
         keyboardButtonsRow2.add(settings);

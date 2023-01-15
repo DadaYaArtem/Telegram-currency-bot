@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import ua.goit.telegrambot.api.CurrencyJsonUpdate;
 import ua.goit.telegrambot.api.dto.Currency;
-import ua.goit.telegrambot.api.utils.Utilities;
+import ua.goit.telegrambot.api.utils.APIUtilities;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -20,7 +20,7 @@ public class PrivateBankCurrencyService implements CurrencyService {
     public Map<String, Double> getRate(Currency currency) {//repetative code
 
         //take json from file
-        String takeJsonFromFile = Utilities.writeFromJsonFile(CurrencyJsonUpdate.getABSOLUTE_PATH_PRIVAT());
+        String takeJsonFromFile = APIUtilities.writeFromJsonFile(CurrencyJsonUpdate.getABSOLUTE_PATH_PRIVAT());
 
         //Convert json => Java Object
         Type typeToken = TypeToken
@@ -39,8 +39,8 @@ public class PrivateBankCurrencyService implements CurrencyService {
         return rate;
     }
 
-    private static double getCurrency(Function<CurrencyItemPrivat, Float> function, List<CurrencyItemPrivat> currencyItemPrivats,
-                                      Currency currency) {
+    public static double getCurrency(Function<CurrencyItemPrivat, Float> function, List<CurrencyItemPrivat> currencyItemPrivats,
+                                     Currency currency) {
         return currencyItemPrivats.stream()
                 .filter(it -> it.getCcy() == currency)
                 .map(function)

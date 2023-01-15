@@ -8,12 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import ua.goit.telegrambot.api.dto.BankNAME;
 import ua.goit.telegrambot.telegram.nonCommand.GeneralBotCommand;
 
 @Slf4j
 @AllArgsConstructor
 public class Bank implements GeneralBotCommand {
-    String checkout;
+    BankNAME checkout;
     Long chatId;
     String userName;
 
@@ -27,19 +28,19 @@ public class Bank implements GeneralBotCommand {
 
         InlineKeyboardButton monoBank = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("monobank") ? "✅ MonoBank" : "MonoBank")
+                .text(this.checkout == BankNAME.MONO ? "✅ MonoBank" : "MonoBank")
                 .callbackData("setBankMonoBank")
                 .build();
 
         InlineKeyboardButton nBU = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("nbu") ? "✅ NBU" : "NBU")
+                .text(this.checkout == BankNAME.NBU ? "✅ NBU" : "NBU")
                 .callbackData("setBankNBU")
                 .build();
 
         InlineKeyboardButton privat = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("privat") ? "✅ Privat" : "Privat")
+                .text(this.checkout == BankNAME.PRIVAT ? "✅ Privat" : "Privat")
                 .callbackData("setBankPrivat")
                 .build();
 

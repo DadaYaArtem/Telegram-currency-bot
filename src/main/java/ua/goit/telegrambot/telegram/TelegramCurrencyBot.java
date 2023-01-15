@@ -8,8 +8,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ua.goit.telegrambot.settings.UserService;
-import ua.goit.telegrambot.telegram.nonCommand.NonCommand;
 import ua.goit.telegrambot.telegram.command.StartBotCommand;
+import ua.goit.telegrambot.telegram.nonCommand.NonCommand;
 
 @Slf4j
 public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
@@ -17,7 +17,6 @@ public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
 
     public TelegramCurrencyBot() {//ctrl + alt + l
         register(new StartBotCommand());
-
     }
 
     @Override
@@ -62,7 +61,6 @@ public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
         try {
             execute(answer);
         } catch (TelegramApiException e) {
-            //e.printStackTrace();
             log.error("exception");
         }
     }

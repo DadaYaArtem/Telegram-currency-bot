@@ -2,6 +2,7 @@ package ua.goit.telegrambot.settings;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.util.Precision;
+import ua.goit.telegrambot.api.dto.BankNAME;
 import ua.goit.telegrambot.api.dto.Currency;
 import ua.goit.telegrambot.api.service.CurrencyService;
 import ua.goit.telegrambot.api.service.MonoCurrencyService;
@@ -42,11 +43,11 @@ public class UserService {
         userStorage.add(new User(userId));
     }
 
-    public void setBank(long userId, String bank) {
+    public void setBank(long userId, BankNAME bank) {
         userStorage.get(userId).setBank(bank);
     }
 
-    public String getBank(long userId) {
+    public BankNAME getBank(long userId) {
         return userStorage.get(userId).getBank();
     }
 
@@ -131,13 +132,13 @@ public class UserService {
 
 
     public String getInfo(long userId) {//lots of repetative code
-        String bank = getBank(userId);
+        BankNAME bank = getBank(userId);
         int rounding = getRounding(userId);
         String result = "";
         String currencyPairUsd = "UAH/USD";
         String currencyPairEur = "UAH/EUR";
         String currencyPairGbp = "UAH/GBP";
-        if (bank.equals("nbu")) {
+        if (bank == BankNAME.NBU) {
 
             if (getUsd(userId)) result = checkForCurrencyAndPring(nbuCurrencyService, rounding, currencyPairUsd);
             if (getEur(userId)) result = checkForCurrencyAndPring(nbuCurrencyService, rounding, currencyPairEur);
@@ -145,10 +146,10 @@ public class UserService {
 
         }
 
-        if (bank.equals("monobank")) {
+        if (bank == BankNAME.MONO) {
             if (getUsd(userId)) {
                 double purchaseRate = monoCurrencyService.getRate(Currency.USD).get("buyUSD");
-                double saleRate = monoCurrencyService.getRate(Currency.USD).get("SellUSD");
+                double saleRate = monoCurrencyService.getRate(Currency.USD).get("sellUSD");
                 if (saleRate == 0) {
                     result = MessageFormat
                             .format("{0} exchange rate: {1}\n Purchase: {2}\n Sale: ⏳ ", "Monobank", currencyPairUsd, String.format("%." + rounding + "f", purchaseRate));
@@ -159,7 +160,7 @@ public class UserService {
             }
             if (getEur(userId)) {
                 double purchaseRate = monoCurrencyService.getRate(Currency.EUR).get("buyEUR");
-                double saleRate = monoCurrencyService.getRate(Currency.EUR).get("SellEUR");
+                double saleRate = monoCurrencyService.getRate(Currency.EUR).get("sellEUR");
 
                 if (saleRate == 0) {
                     result = MessageFormat
@@ -178,7 +179,7 @@ public class UserService {
             }
         }
 
-        if (bank.equals("privat")) {
+        if (bank == BankNAME.PRIVAT) {
             if (getUsd(userId)) {
                 double purchaseRate = privateBankCurrencyService.getRate(Currency.USD).get("buyUSD");
                 double saleRate = privateBankCurrencyService.getRate(Currency.USD).get("sellUSD");
@@ -219,16 +220,13 @@ public class UserService {
     }
 
     public String getInfoUkr(long userId) {
-        String bank = getBank(userId);
-        boolean usd = getUsd(userId);
-        boolean eur = getEur(userId);
-        boolean gbp = getGbp(userId);
+        BankNAME bank = getBank(userId);
         int rounding = getRounding(userId);
         String result = "";
         String currencyPairUsd = "UAH/USD";
         String currencyPairEur = "UAH/EUR";
         String currencyPairGbp = "UAH/GBP";
-        if (bank.equals("nbu")) {
+        if (bank == BankNAME.NBU) {
 
             if (getUsd(userId)) {
                 double purchaseRate1 = nbuCurrencyService.getRate(Currency.USD).get("rateUSD");
@@ -253,10 +251,10 @@ public class UserService {
             }
         }
 
-        if (bank.equals("monobank")) {
+        if (bank == BankNAME.MONO) {
             if (getUsd(userId)) {
                 double purchaseRate = monoCurrencyService.getRate(Currency.USD).get("buyUSD");
-                double saleRate = monoCurrencyService.getRate(Currency.USD).get("SellUSD");
+                double saleRate = monoCurrencyService.getRate(Currency.USD).get("sellUSD");
                 if (saleRate == 0) {
                     result = MessageFormat
                             .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "МоноБанк", currencyPairUsd, String.format("%." + rounding + "f", purchaseRate));
@@ -267,7 +265,7 @@ public class UserService {
             }
             if (getEur(userId)) {
                 double purchaseRate = monoCurrencyService.getRate(Currency.EUR).get("buyEUR");
-                double saleRate = monoCurrencyService.getRate(Currency.EUR).get("SellEUR");
+                double saleRate = monoCurrencyService.getRate(Currency.EUR).get("sellEUR");
 
                 if (saleRate == 0) {
                     result = MessageFormat
@@ -286,7 +284,7 @@ public class UserService {
             }
         }
 
-        if (bank.equals("privat")) {
+        if (bank == BankNAME.PRIVAT) {
             if (getUsd(userId)) {
                 double purchaseRate = privateBankCurrencyService.getRate(Currency.USD).get("buyUSD");
                 double saleRate = privateBankCurrencyService.getRate(Currency.USD).get("sellUSD");
