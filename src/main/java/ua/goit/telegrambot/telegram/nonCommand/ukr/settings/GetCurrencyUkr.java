@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import ua.goit.telegrambot.api.dto.Currency;
 import ua.goit.telegrambot.telegram.nonCommand.GeneralBotCommand;
 
 import java.util.ArrayList;
@@ -12,8 +13,8 @@ import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
-public class CurrencyUkr implements GeneralBotCommand {
-    String checkout;
+public class GetCurrencyUkr implements GeneralBotCommand {
+    Currency checkout;
     Long chatId;
     String userName;
 
@@ -27,19 +28,19 @@ public class CurrencyUkr implements GeneralBotCommand {
 
         InlineKeyboardButton usd = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("usd") ? "✅ USD" : "USD")
+                .text(this.checkout == Currency.USD ? "✅ USD" : "USD")
                 .callbackData("setCurrencyUsdUkr")
                 .build();
 
         InlineKeyboardButton eur = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("eur") ? "✅ EUR" : "EUR")
+                .text(this.checkout == Currency.EUR ? "✅ EUR" : "EUR")
                 .callbackData("setCurrencyEurUkr")
                 .build();
 
         InlineKeyboardButton gbp = InlineKeyboardButton
                 .builder()
-                .text(this.checkout.equals("gbp") ? "✅ GBP" : "GBP")
+                .text(this.checkout == Currency.GBP ? "✅ GBP" : "GBP")
                 .callbackData("setCurrencyGbpUkr")
                 .build();
 
@@ -58,7 +59,7 @@ public class CurrencyUkr implements GeneralBotCommand {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         markup.setKeyboard(settingsKeyboard);
         message.setReplyMarkup(markup);
-        log.info(checkout);
+        log.info(checkout.name());
         return message;
     }
 

@@ -28,7 +28,7 @@ public class CurrencyJsonUpdate implements Runnable {
     public static final String PRIVAT_URL = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";
     public static final String PRIVAT_URL_NOT_USD_EUR= "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=4";
 
-    public static final String MONO_URL = "https://api.monobank.ua/bank/currency";
+        public static final String MONO_URL = "https://api.monobank.ua/bank/currency";
 
     @Override
     public void run() {

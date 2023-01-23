@@ -7,20 +7,19 @@ import ua.goit.telegrambot.api.dto.BankNAME;
 import ua.goit.telegrambot.api.service.MonoCurrencyService;
 import ua.goit.telegrambot.api.service.NBUCurrencyService;
 import ua.goit.telegrambot.api.service.PrivateBankCurrencyService;
-import ua.goit.telegrambot.settings.User;
 import ua.goit.telegrambot.settings.UserService;
 import ua.goit.telegrambot.telegram.nonCommand.eng.GetInfoCommand;
 import ua.goit.telegrambot.telegram.nonCommand.eng.SettingsCommand;
 import ua.goit.telegrambot.telegram.nonCommand.eng.StartEngCommand;
 import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.Bank;
-import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.Currency;
+import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.GetCurrency;
 import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.Notifications;
 import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.Rounding;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.GetInfoUkrCommand;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.SettingsUkrCommand;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.StartUkrCommand;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.settings.BankUkr;
-import ua.goit.telegrambot.telegram.nonCommand.ukr.settings.CurrencyUkr;
+import ua.goit.telegrambot.telegram.nonCommand.ukr.settings.GetCurrencyUkr;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.settings.NotificationsUkr;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.settings.RoundingUkr;
 
@@ -55,7 +54,8 @@ public class NonCommand {
                 answer = new Bank(service.getBank(chatId), chatId, userName).getMessage();
                 break;
             case "currency":
-                answer = new Currency(service.getCurrency(chatId), chatId, userName).getMessage();
+                answer = new GetCurrency(service.getCurrency(chatId), chatId, userName).getMessage();
+                log.info("servive.getCurrency" + service.getCurrency(chatId));
                 break;
             case "notifications":
                 answer = new Notifications(String.valueOf(chatId), chatId, userName).getMessage();
@@ -78,7 +78,7 @@ public class NonCommand {
                 answer = new BankUkr(service.getBank(chatId), chatId, userName).getMessage();
                 break;
             case "currencyUkr":
-                answer = new CurrencyUkr(service.getCurrency(chatId), chatId, userName).getMessage();
+                answer = new GetCurrencyUkr(service.getCurrency(chatId), chatId, userName).getMessage();
                 break;
             case "notificationsUkr":
                 answer = new NotificationsUkr(String.valueOf(service.getSchedulerTime(chatId)), chatId, userName).getMessage();;
@@ -137,40 +137,28 @@ public class NonCommand {
                 break;
             //Currency setup for user Eng
             case "setCurrencyUSD":
-                service.setUsd(chatId,true);
-                service.setEur(chatId,false);
-                service.setGbp(chatId,false);
+                service.setUsd(chatId);
                 answer = new StartEngCommand(chatId, userName).getMessage();
                 break;
             case "setCurrencyEUR":
-                service.setUsd(chatId,false);
-                service.setEur(chatId,true);
-                service.setGbp(chatId,false);
+                service.setEur(chatId);
                 answer = new StartEngCommand(chatId, userName).getMessage();
                 break;
             case "setCurrencyGbp":
-                service.setUsd(chatId,false);
-                service.setEur(chatId,false);
-                service.setGbp(chatId,true);
+                service.setGbp(chatId);
                 answer = new StartEngCommand(chatId, userName).getMessage();
                 break;
             //Currency setup for user Ukr
             case "setCurrencyUsdUkr":
-                service.setUsd(chatId,true);
-                service.setEur(chatId,false);
-                service.setGbp(chatId,false);
+                service.setUsd(chatId);
                 answer = new StartUkrCommand(chatId, userName).getMessage();
                 break;
             case "setCurrencyEurUkr":
-                service.setUsd(chatId,false);
-                service.setEur(chatId,true);
-                service.setGbp(chatId,false);
+                service.setEur(chatId);
                 answer = new StartUkrCommand(chatId, userName).getMessage();
                 break;
             case "setCurrencyGbpUkr":
-                service.setUsd(chatId,false);
-                service.setEur(chatId,false);
-                service.setGbp(chatId,true);
+                service.setGbp(chatId);
                 answer = new StartUkrCommand(chatId, userName).getMessage();
                 break;
             //Notifications setup for user ENG
