@@ -91,10 +91,6 @@ public class UserService {
         return userStorage.get(userId).isEnglish();
     }
 
-    public boolean getUkrainian(long userId) {
-        return userStorage.get(userId).isUkrainian();
-    }
-
     public void setEnglish(long userId, boolean english) {
         userStorage.get(userId).setEnglish(english);
     }

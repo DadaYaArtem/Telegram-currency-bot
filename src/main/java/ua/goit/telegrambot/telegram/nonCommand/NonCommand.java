@@ -11,10 +11,10 @@ import ua.goit.telegrambot.settings.UserService;
 import ua.goit.telegrambot.telegram.nonCommand.eng.GetInfoCommand;
 import ua.goit.telegrambot.telegram.nonCommand.eng.SettingsCommand;
 import ua.goit.telegrambot.telegram.nonCommand.eng.StartEngCommand;
-import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.Bank;
-import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.GetCurrency;
-import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.Notifications;
-import ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings.Rounding;
+import ua.goit.telegrambot.telegram.nonCommand.eng.settings.Bank;
+import ua.goit.telegrambot.telegram.nonCommand.eng.settings.GetCurrency;
+import ua.goit.telegrambot.telegram.nonCommand.eng.settings.Notifications;
+import ua.goit.telegrambot.telegram.nonCommand.eng.settings.Rounding;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.GetInfoUkrCommand;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.SettingsUkrCommand;
 import ua.goit.telegrambot.telegram.nonCommand.ukr.StartUkrCommand;
@@ -55,7 +55,6 @@ public class NonCommand {
                 break;
             case "currency":
                 answer = new GetCurrency(service.getCurrency(chatId), chatId, userName).getMessage();
-                log.info("servive.getCurrency" + service.getCurrency(chatId));
                 break;
             case "notifications":
                 answer = new Notifications(String.valueOf(chatId), chatId, userName).getMessage();

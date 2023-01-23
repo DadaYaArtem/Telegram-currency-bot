@@ -11,9 +11,15 @@ import ua.goit.telegrambot.settings.UserService;
 import ua.goit.telegrambot.telegram.command.StartBotCommand;
 import ua.goit.telegrambot.telegram.nonCommand.NonCommand;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 @Slf4j
 public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
     UserService service = UserService.getInstance();
+
 
     public TelegramCurrencyBot() {//ctrl + alt + l
         register(new StartBotCommand());
@@ -21,12 +27,32 @@ public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
 
     @Override
     public String getBotUsername() {
-        return BotConstants.BOT_NAME;
+        try {
+            String configFilePath = "config.properties";
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+
+            return prop.getProperty("bot.name");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     @Override
     public String getBotToken() {
-        return BotConstants.BOT_TOKEN;
+        try {
+            String configFilePath = "config.properties";
+            FileInputStream propsInput = new FileInputStream(configFilePath);
+            Properties prop = new Properties();
+            prop.load(propsInput);
+
+            return prop.getProperty("bot.token");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     @Override

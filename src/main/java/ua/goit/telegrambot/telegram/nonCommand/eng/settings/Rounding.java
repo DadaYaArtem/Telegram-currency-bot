@@ -1,4 +1,4 @@
-package ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings;
+package ua.goit.telegrambot.telegram.nonCommand.eng.settings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,48 +8,48 @@ import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import ua.goit.telegrambot.api.dto.Currency;
 import ua.goit.telegrambot.telegram.nonCommand.GeneralBotCommand;
 
 @Slf4j
 @AllArgsConstructor
-public class GetCurrency implements GeneralBotCommand {
-    Currency checkout;
+public class Rounding implements GeneralBotCommand {
+
+    int checkout;
     Long chatId;
     String userName;
 
     public SendMessage getMessage() {
-        log.info("open currency menu");
-        String helloText = "Please choose the currency \uD83D\uDCB2";
+        log.info("open rounding menu");
+        String helloText = "Please choose the rounding";
 
         SendMessage message = new SendMessage();
         message.setText(helloText);
         message.setChatId(Long.toString(this.chatId));
 
-        InlineKeyboardButton usd = InlineKeyboardButton
+        InlineKeyboardButton two = InlineKeyboardButton
                 .builder()
-                .text(this.checkout == Currency.USD ? "✅ USD" : "USD")
-                .callbackData("setCurrencyUSD")
+                .text(checkout == 2 ? "✅ 2" : "2")
+                .callbackData("setRoundingTwo")
                 .build();
 
-        InlineKeyboardButton eur = InlineKeyboardButton
+        InlineKeyboardButton three = InlineKeyboardButton
                 .builder()
-                .text(this.checkout == Currency.EUR ? "✅ EUR" : "EUR")
-                .callbackData("setCurrencyEUR")
+                .text(checkout == 3 ? "✅ 3" : "3")
+                .callbackData("setRoundingThree")
                 .build();
 
-        InlineKeyboardButton gbp = InlineKeyboardButton
+        InlineKeyboardButton four = InlineKeyboardButton
                 .builder()
-                .text(this.checkout == Currency.GBP ? "✅ GBP" : "GBP")
-                .callbackData("setCurrencyGbp")
+                .text(checkout == 4 ? "✅ 4" : "4")
+                .callbackData("setRoundingFour")
                 .build();
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList();
-        keyboardButtonsRow1.add(usd);
+        keyboardButtonsRow1.add(two);
         List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList();
-        keyboardButtonsRow2.add(eur);
+        keyboardButtonsRow2.add(three);
         List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList();
-        keyboardButtonsRow3.add(gbp);
+        keyboardButtonsRow3.add(four);
 
         List<List<InlineKeyboardButton>> settingsKeyboard = new ArrayList();
         settingsKeyboard.add(keyboardButtonsRow1);

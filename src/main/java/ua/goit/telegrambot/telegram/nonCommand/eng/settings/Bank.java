@@ -1,4 +1,4 @@
-package ua.goit.telegrambot.telegram.nonCommand.eng.mainmenu.settings;
+package ua.goit.telegrambot.telegram.nonCommand.eng.settings;
 
 import java.util.ArrayList;
 import java.util.List;

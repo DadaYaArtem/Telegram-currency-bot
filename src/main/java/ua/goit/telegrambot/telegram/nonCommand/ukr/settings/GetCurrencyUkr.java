@@ -59,7 +59,6 @@ public class GetCurrencyUkr implements GeneralBotCommand {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         markup.setKeyboard(settingsKeyboard);
         message.setReplyMarkup(markup);
-        log.info(checkout.name());
         return message;
     }
 
