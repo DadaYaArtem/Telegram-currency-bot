@@ -103,7 +103,6 @@ public class UserService {
         userStorage.get(userId).setUkrainian(english);
     }
 
-
     public Currency getCurrency(long userId) {
         return userStorage.get(userId).getCurrency();
     }
@@ -113,10 +112,9 @@ public class UserService {
     }
 
 
-    public String getInfo(long userId) {//lots of repetative code
+    public String getInfo(long userId) {
         BankNAME bank = getBank(userId);
         Currency currency = getCurrency(userId);
-        int rounding = getRounding(userId);
         String result = "";
         String currencyPairUsd = "UAH/USD";
         String currencyPairEur = "UAH/EUR";
@@ -124,50 +122,42 @@ public class UserService {
 
         if (bank == BankNAME.NBU) {
 
-            if (currency ==Currency.USD) result = checkForCurrencyAndPringOneRate(Currency.USD, BankNAME.NBU, "rateUSD", nbuCurrencyService, rounding, currencyPairUsd);
-            if (currency == Currency.EUR) result = checkForCurrencyAndPringOneRate(Currency.EUR, BankNAME.NBU, "rateEUR", nbuCurrencyService, rounding, currencyPairEur);
-            if (currency == Currency.GBP) result = checkForCurrencyAndPringOneRate(Currency.GBP, BankNAME.NBU, "rateGBP", nbuCurrencyService, rounding, currencyPairGbp);
+            if (currency ==Currency.USD) result = getRateAndFormatCross(userId, "rateUSD", nbuCurrencyService, currencyPairUsd);
+            if (currency == Currency.EUR) result = getRateAndFormatCross(userId, "rateEUR", nbuCurrencyService, currencyPairEur);
+            if (currency == Currency.GBP) result = getRateAndFormatCross(userId, "rateGBP", nbuCurrencyService, currencyPairGbp);
         }
 
         if (bank == BankNAME.MONO) {
-            if (currency ==Currency.USD) result = checkForCurrencyAndPringBuySale(Currency.USD, BankNAME.MONO, "buyUSD","sellUSD", monoCurrencyService, rounding, currencyPairUsd);
-            if (currency ==Currency.EUR) result = checkForCurrencyAndPringBuySale(Currency.EUR, BankNAME.MONO, "buyEUR","sellEUR", monoCurrencyService, rounding, currencyPairEur);
-            if (currency ==Currency.GBP) result = checkForCurrencyAndPringOneRate(Currency.GBP, BankNAME.MONO, "crossGBP", monoCurrencyService, rounding, currencyPairGbp);
+            if (currency ==Currency.USD) result = getRateAndFormatBuySell(userId,"buyUSD","sellUSD", monoCurrencyService, currencyPairUsd);
+            if (currency ==Currency.EUR) result = getRateAndFormatBuySell(userId,"buyEUR","sellEUR", monoCurrencyService, currencyPairEur);
+            if (currency ==Currency.GBP) result = getRateAndFormatCross(userId, "crossGBP", monoCurrencyService, currencyPairGbp);
 
         }
 
         if (bank == BankNAME.PRIVAT) {
-            if (currency ==Currency.USD) result = checkForCurrencyAndPringBuySale(Currency.USD, BankNAME.PRIVAT, "buyUSD","sellUSD", privateBankCurrencyService, rounding, currencyPairUsd);
-            if (currency ==Currency.EUR) result = checkForCurrencyAndPringBuySale(Currency.EUR, BankNAME.PRIVAT, "buyEUR","sellEUR", privateBankCurrencyService, rounding, currencyPairEur);
-            if (currency ==Currency.GBP) result = checkForCurrencyAndPringBuySale(Currency.GBP, BankNAME.PRIVAT, "buyGBP","sellGBP", privateBankCurrencyService, rounding, currencyPairGbp);
+            if (currency ==Currency.USD) result = getRateAndFormatBuySell(userId,"buyUSD","sellUSD", privateBankCurrencyService, currencyPairUsd);
+            if (currency ==Currency.EUR) result = getRateAndFormatBuySell(userId,"buyEUR","sellEUR", privateBankCurrencyService, currencyPairEur);
+            if (currency ==Currency.GBP) result = getRateAndFormatBuySell(userId,"buyGBP","sellGBP", privateBankCurrencyService, currencyPairGbp);
         }
         log.info(result);
         return result;
     }
 
-    private static String checkForCurrencyAndPringOneRate(Currency currency, BankNAME bankNAME, String operation, CurrencyService currencyService, int rounding, String currencyPair) {
-        double purchaseRate = currencyService.getRate(currency).get(operation);
+    private String getRateAndFormatCross(long userId, String operation, CurrencyService currencyService, String currencyPair) {
+        User user = userStorage.get(userId);
+        double purchaseRate = currencyService.getRate(user.getCurrency()).get(operation);
         return MessageFormat
                 .format("{0} exchange rate: {1}\n Purchase: {2}\n Sale: ⏳",
-                        bankNAME, currencyPair, String.format("%." + rounding + "f", purchaseRate));
+                        user.getBank(), currencyPair, String.format("%." + user.getRounding() + "f", purchaseRate));
     }
 
-    private static String checkForCurrencyAndPringBuySale(Currency currency, BankNAME bankNAME, String operation1, String operation2, CurrencyService currencyService, int rounding, String currencyPair) {
-        log.info("currency:" + currency);
-        log.info("bankNAME:" + bankNAME);
-        log.info("operation1:" + operation1);
-        log.info("operation2:" + operation2);
-        log.info("rounding:" + rounding);
-        log.info("currencyService:" + currencyService);
-        log.info("currencyPair:" + currencyPair);
-        log.info("mono getRate: " + currencyService.getRate(currency).toString());
-        double buyRate = currencyService.getRate(currency).get(operation1);
-        log.info(String.valueOf(buyRate));
-        double saleRate = currencyService.getRate(currency).get(operation2);
-        log.info(String.valueOf(saleRate));
+    private String getRateAndFormatBuySell(long userId, String operation1, String operation2, CurrencyService currencyService, String currencyPair) {
+        User user = userStorage.get(userId);
+        double buyRate = currencyService.getRate(user.getCurrency()).get(operation1);
+        double saleRate = currencyService.getRate(user.getCurrency()).get(operation2);
         return MessageFormat
                 .format("{0} exchange rate: {1}\n Purchase: {2}\n Sale: {3}",
-                        bankNAME, currencyPair, String.format("%." + rounding + "f", buyRate), String.format("%." + rounding + "f", saleRate));
+                        user.getBank(), currencyPair, String.format("%." + user.getRounding() + "f", buyRate), String.format("%." + user.getRounding() + "f", saleRate));
     }
 
     public String getInfoUkr(long userId) {
@@ -178,6 +168,7 @@ public class UserService {
         String currencyPairUsd = "UAH/USD";
         String currencyPairEur = "UAH/EUR";
         String currencyPairGbp = "UAH/GBP";
+
         if (bank == BankNAME.NBU) {
 
             if (currency == Currency.USD) {
