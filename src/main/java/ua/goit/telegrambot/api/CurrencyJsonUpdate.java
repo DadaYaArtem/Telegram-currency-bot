@@ -8,16 +8,26 @@ import ua.goit.telegrambot.api.utils.APIUtilities;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Slf4j
 public class CurrencyJsonUpdate implements Runnable {
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+    private static final Date date = new Date();
     @Getter
     private static final String ABSOLUTE_PATH_NBU = "src/main/resources/Currency_NBU_rates.json";
     @Getter
     private static final String ABSOLUTE_PATH_PRIVAT = "src/main/resources/Currency_Privat_rates.json";
     @Getter
+    private static final String ADDITIONAL_PATH_PRIVAT = "src/main/resources/Currency_Privat_rates_unusual.json";
+    @Getter
     private static final String ABSOLUTE_PATH_MONO = "src/main/resources/Currency_Mono_rates.json";
     public static final String NBU_URL = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json";
+
     public static final String PRIVAT_URL = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";
+    public static final String PRIVAT_URL_NOT_USD_EUR= "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=4";
+
     public static final String MONO_URL = "https://api.monobank.ua/bank/currency";
 
     @Override
@@ -35,9 +45,16 @@ public class CurrencyJsonUpdate implements Runnable {
             updateJSON(ABSOLUTE_PATH_PRIVAT, PRIVAT_URL, BankNAME.PRIVAT);
         };
 
+        final Runnable privatUnique = () ->
+        {
+            updateJSON(ADDITIONAL_PATH_PRIVAT, PRIVAT_URL_NOT_USD_EUR, BankNAME.PRIVAT);
+        };
+
         //Mono currency update
         final Runnable mono = () ->
         {
+            log.info("Runnable mono started");
+            log.info(formatter.format(date));
             updateJSON(ABSOLUTE_PATH_MONO, MONO_URL, BankNAME.MONO);
         };
 
@@ -45,6 +62,8 @@ public class CurrencyJsonUpdate implements Runnable {
         log.info("NBU API thread downloader has started");
         new Thread(privat).start();
         log.info("Privat API thread downloader has started");
+        new Thread(privatUnique).start();
+        log.info("Privat UNIQUE API thread downloader has started");
         new Thread(mono).start();
         log.info("MonoBank API thread downloader has started");
     }
