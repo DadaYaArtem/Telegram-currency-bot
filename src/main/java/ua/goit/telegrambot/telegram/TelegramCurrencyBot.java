@@ -73,7 +73,7 @@ public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
             answer.setChatId(chatId.toString());
             log.info("ChatId# :" + chatId + " | Sent ENG notifications message");
         } else {
-            answer.setText(service.getInfoUkr(chatId));
+            answer.setText(service.getInfo(chatId));
             answer.setChatId(chatId.toString());
             log.info("ChatId# :" + chatId + " | Sent UKR notifications message");
         }

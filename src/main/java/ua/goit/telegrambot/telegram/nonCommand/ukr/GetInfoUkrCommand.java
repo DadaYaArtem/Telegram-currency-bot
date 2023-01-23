@@ -20,7 +20,7 @@ public class GetInfoUkrCommand implements GeneralBotCommand {
         UserService service = UserService.getInstance();
         log.info("getInfoUkr");
 
-        String helloText = service.getInfoUkr(chatId);
+        String helloText = service.getInfo(chatId);
 
         SendMessage message = new SendMessage();
         message.setText(helloText);

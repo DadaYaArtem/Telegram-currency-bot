@@ -146,119 +146,30 @@ public class UserService {
     private String getRateAndFormatCross(long userId, String operation, CurrencyService currencyService, String currencyPair) {
         User user = userStorage.get(userId);
         double purchaseRate = currencyService.getRate(user.getCurrency()).get(operation);
+        if (user.isEnglish()){
         return MessageFormat
                 .format("{0} exchange rate: {1}\n Purchase: {2}\n Sale: ⏳",
                         user.getBank(), currencyPair, String.format("%." + user.getRounding() + "f", purchaseRate));
+        }
+        else
+            return MessageFormat
+                    .format("{0} Курс валют: {1}\n Купівля: {2}\n Продаж: ⏳",
+                            user.getBank(), currencyPair, String.format("%." + user.getRounding() + "f", purchaseRate));
     }
 
     private String getRateAndFormatBuySell(long userId, String operation1, String operation2, CurrencyService currencyService, String currencyPair) {
         User user = userStorage.get(userId);
         double buyRate = currencyService.getRate(user.getCurrency()).get(operation1);
         double saleRate = currencyService.getRate(user.getCurrency()).get(operation2);
+        if (user.isEnglish()){
         return MessageFormat
                 .format("{0} exchange rate: {1}\n Purchase: {2}\n Sale: {3}",
                         user.getBank(), currencyPair, String.format("%." + user.getRounding() + "f", buyRate), String.format("%." + user.getRounding() + "f", saleRate));
-    }
-
-    public String getInfoUkr(long userId) {
-        BankNAME bank = getBank(userId);
-        Currency currency = getCurrency(userId);
-        int rounding = getRounding(userId);
-        String result = "";
-        String currencyPairUsd = "UAH/USD";
-        String currencyPairEur = "UAH/EUR";
-        String currencyPairGbp = "UAH/GBP";
-
-        if (bank == BankNAME.NBU) {
-
-            if (currency == Currency.USD) {
-                double purchaseRate1 = nbuCurrencyService.getRate(Currency.USD).get("rateUSD");
-                double purchaseRate = Precision.round(purchaseRate1, rounding);
-                result = MessageFormat
-                        .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "НБУ", currencyPairUsd, String.format("%." + rounding + "f", purchaseRate));
-
-            }
-            if (currency == Currency.EUR) {
-                double purchaseRate1 = nbuCurrencyService.getRate(Currency.EUR).get("rateEUR");
-                double purchaseRate = Precision.round(purchaseRate1, rounding);
-                result = MessageFormat
-                        .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "НБУ", currencyPairEur, String.format("%." + rounding + "f", purchaseRate));
-
-            }
-            if (currency == Currency.GBP) {
-                double purchaseRate1 = nbuCurrencyService.getRate(Currency.GBP).get("rateGBP");
-                double purchaseRate = Precision.round(purchaseRate1, rounding);
-                result = MessageFormat
-                        .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "НБУ", currencyPairGbp, String.format("%." + rounding + "f", purchaseRate));
-
-            }
         }
+        else
+            return MessageFormat
+                    .format("{0} Курс валют: {1}\n Купівля: {2}\n Продаж: {3}",
+                            user.getBank(), currencyPair, String.format("%." + user.getRounding() + "f", buyRate), String.format("%." + user.getRounding() + "f", saleRate));
 
-        if (bank == BankNAME.MONO) {
-            if (currency == Currency.USD) {
-                double purchaseRate = monoCurrencyService.getRate(Currency.USD).get("buyUSD");
-                double saleRate = monoCurrencyService.getRate(Currency.USD).get("sellUSD");
-                if (saleRate == 0) {
-                    result = MessageFormat
-                            .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "МоноБанк", currencyPairUsd, String.format("%." + rounding + "f", purchaseRate));
-                } else {
-                    result = MessageFormat
-                            .format("{0} курс валют: {1}\n купівля: {2}\n продаж: {3}", "МоноБанк", currencyPairUsd, String.format("%." + rounding + "f", purchaseRate), String.format("%." + rounding + "f", saleRate));
-                }
-            }
-            if (currency == Currency.EUR) {
-                double purchaseRate = monoCurrencyService.getRate(Currency.EUR).get("buyEUR");
-                double saleRate = monoCurrencyService.getRate(Currency.EUR).get("sellEUR");
-
-                if (saleRate == 0) {
-                    result = MessageFormat
-                            .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "МоноБанк", currencyPairEur, String.format("%." + rounding + "f", purchaseRate));
-                } else {
-                    result = MessageFormat
-                            .format("{0} курс валют: {1}\n купівля: {2}\n продаж: {3}", "МоноБанк", currencyPairEur, String.format("%." + rounding + "f", purchaseRate), String.format("%." + rounding + "f", saleRate));
-                }
-            }
-            if (currency == Currency.GBP) {
-                double purchaseRate1 = monoCurrencyService.getRate(Currency.GBP).get("crossGBP");
-                double purchaseRate = Precision.round(purchaseRate1, rounding);
-                result = MessageFormat
-                        .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "МоноБанк", currencyPairGbp, String.format("%." + rounding + "f", purchaseRate));
-
-            }
-        }
-
-        if (bank == BankNAME.PRIVAT) {
-            if (currency == Currency.USD) {
-                double purchaseRate = privateBankCurrencyService.getRate(Currency.USD).get("buyUSD");
-                double saleRate = privateBankCurrencyService.getRate(Currency.USD).get("sellUSD");
-                if (saleRate == 0) {
-                    result = MessageFormat
-                            .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "ПриватБанк", currencyPairUsd, String.format("%." + rounding + "f", purchaseRate));
-                } else {
-                    result = MessageFormat
-                            .format("{0} курс валют: {1}\n купівля: {2}\n продаж: {3}", "ПриватБанк", currencyPairUsd, String.format("%." + rounding + "f", purchaseRate), String.format("%." + rounding + "f", saleRate));
-                }
-            }
-            if (currency == Currency.EUR) {
-                double purchaseRate = privateBankCurrencyService.getRate(Currency.EUR).get("sellEUR");
-                double saleRate = privateBankCurrencyService.getRate(Currency.EUR).get("buyEUR");
-                if (saleRate == 0) {
-                    result = MessageFormat
-                            .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "ПриватБанк", currencyPairEur, String.format("%." + rounding + "f", saleRate));
-                } else {
-                    result = MessageFormat
-                            .format("{0} курс валют: {1}\n купівля: {2}\n продаж: {3}", "ПриватБанк", currencyPairEur, String.format("%." + rounding + "f", saleRate), String.format("%." + rounding + "f", purchaseRate));
-                }
-            }
-            if (currency == Currency.GBP) {
-                double purchaseRate1 = nbuCurrencyService.getRate(Currency.GBP).get("rateGBP");
-                double purchaseRate = Precision.round(purchaseRate1, rounding);
-                result = MessageFormat
-                        .format("{0} курс валют: {1}\n купівля: {2}\n продаж: ⏳ ", "ПриватБанк", currencyPairGbp, String.format("%." + rounding + "f", purchaseRate));
-
-            }
-        }
-        log.info(result);
-        return result;
     }
 }
