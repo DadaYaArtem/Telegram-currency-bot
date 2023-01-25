@@ -16,13 +16,13 @@ public class CurrencyJsonUpdate implements Runnable {
     private static final SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
     private static final Date date = new Date();
     @Getter
-    private static final String ABSOLUTE_PATH_NBU = "src/main/resources/Currency_NBU_rates.json";
+    private static final String ABSOLUTE_PATH_NBU = "src/main/resources/rates/Currency_NBU_rates.json";
     @Getter
-    private static final String ABSOLUTE_PATH_PRIVAT = "src/main/resources/Currency_Privat_rates.json";
+    private static final String ABSOLUTE_PATH_PRIVAT = "src/main/resources/rates/Currency_Privat_rates.json";
     @Getter
-    private static final String ADDITIONAL_PATH_PRIVAT = "src/main/resources/Currency_Privat_rates_unusual.json";
+    private static final String ADDITIONAL_PATH_PRIVAT = "src/main/resources/rates/Currency_Privat_rates_unusual.json";
     @Getter
-    private static final String ABSOLUTE_PATH_MONO = "src/main/resources/Currency_Mono_rates.json";
+    private static final String ABSOLUTE_PATH_MONO = "src/main/resources/rates/Currency_Mono_rates.json";
     public static final String NBU_URL = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json";
 
     public static final String PRIVAT_URL = "https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5";

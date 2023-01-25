@@ -7,6 +7,7 @@ import ua.goit.telegrambot.api.CurrencyJsonUpdate;
 import ua.goit.telegrambot.settings.Scheduler;
 import ua.goit.telegrambot.telegram.TelegramCurrencyBot;
 
+
 @Slf4j
 public class TelegramBotApp {
     public static void main(String[] args) {

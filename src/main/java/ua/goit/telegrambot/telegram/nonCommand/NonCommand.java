@@ -38,8 +38,7 @@ public class NonCommand {
         switch(data) {
             case "english":
                 answer = new StartEngCommand(chatId, userName).getMessage();
-                service.setEnglish(chatId, true);
-                service.setUkrainian(chatId, false);
+                service.setEnglish(chatId);
                 break;
             case "getInfo":
                 answer = new GetInfoCommand(chatId, userName).getMessage();
@@ -60,8 +59,7 @@ public class NonCommand {
                 answer = new Notifications(String.valueOf(chatId), chatId, userName).getMessage();
                 break;
             case "ukrainian":
-                service.setEnglish(chatId, false);
-                service.setUkrainian(chatId, true);
+                service.setUkrainian(chatId);
                 answer = new StartUkrCommand(chatId, userName).getMessage();
                 break;
             case "getInfoUkr":

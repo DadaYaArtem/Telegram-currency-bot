@@ -1,4 +1,4 @@
-package ua.goit.telegrambot.telegram.command;
+package ua.goit.telegrambot.telegram;
 
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.extensions.bots.commandbot.commands.BotCommand;

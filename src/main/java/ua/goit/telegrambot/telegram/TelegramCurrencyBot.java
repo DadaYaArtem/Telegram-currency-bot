@@ -8,11 +8,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ua.goit.telegrambot.settings.UserService;
-import ua.goit.telegrambot.telegram.command.StartBotCommand;
 import ua.goit.telegrambot.telegram.nonCommand.NonCommand;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
