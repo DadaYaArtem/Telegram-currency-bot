@@ -1,5 +1,7 @@
 package ua.goit.telegrambot.db;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import ua.goit.telegrambot.api.dto.BankNAME;
@@ -28,6 +30,20 @@ public class Queries {
         tx.commit();
         session.close();
         return user;
+    }
+
+    public  <T> List<T> loadAllData(Class<T> type) {
+        Session session = HibernateUtil.getInstance().getSessionFactory().openSession();
+        Transaction tx = session.beginTransaction();
+
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(type);
+        criteria.from(type);
+        List<T> data = session.createQuery(criteria).getResultList();
+
+        tx.commit();
+        session.close();
+        return data;
     }
 
     public void setEnglish(long userId){

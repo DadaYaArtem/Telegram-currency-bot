@@ -35,11 +35,11 @@ dependencies {
 //    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
 //    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
 //
-    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
-    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
-
-    // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
-    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+//    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+//    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+//
+//    // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
+//    implementation group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
 
     // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
     implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'

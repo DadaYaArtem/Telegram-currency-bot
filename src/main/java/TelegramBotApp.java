@@ -4,6 +4,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import ua.goit.telegrambot.api.CurrencyJsonUpdate;
+import ua.goit.telegrambot.db.Queries;
 import ua.goit.telegrambot.settings.Scheduler;
 import ua.goit.telegrambot.telegram.TelegramCurrencyBot;
 

@@ -18,8 +18,7 @@ import java.util.Properties;
 public class TelegramCurrencyBot extends TelegramLongPollingCommandBot {
     UserService service = UserService.getInstance();
 
-
-    public TelegramCurrencyBot() {//ctrl + alt + l
+    public TelegramCurrencyBot() {
         register(new StartBotCommand());
     }
 

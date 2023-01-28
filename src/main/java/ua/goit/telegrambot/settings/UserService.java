@@ -10,12 +10,12 @@ import ua.goit.telegrambot.api.service.PrivateBankCurrencyService;
 import ua.goit.telegrambot.db.Queries;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 public class UserService {
     private static volatile UserService instance;
-    private final StorageOfUsers userStorage;//final
     private final Queries queries = new Queries();
 
     NBUCurrencyService nbuCurrencyService = new NBUCurrencyService();//why classes do not have static reference methods
@@ -23,7 +23,6 @@ public class UserService {
     MonoCurrencyService monoCurrencyService = new MonoCurrencyService();
 
     private UserService() {
-        userStorage = StorageOfUsers.getInstance();
     }
 
     public static UserService getInstance() { //«блокировка с двойной проверкой» (Double-Checked Locking)
@@ -122,8 +121,15 @@ public class UserService {
     }
 
     public List<Long> getUsersWithNotificationOnCurrentHour(int time) {
-        return null;
-//        return userStorage.getUsersWithNotficationOnCurrentHour(time);
+        List<User> users = queries.loadAllData(User.class);
+        List<Long> ids = new ArrayList<>();
+
+        for (User user : users) {
+            if (user.isScheduler() && user.getSchedulerTime() == time) {
+                ids.add(user.getId());
+            }
+        }
+        return ids;
     }
 
 
