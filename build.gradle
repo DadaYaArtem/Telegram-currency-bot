@@ -59,11 +59,20 @@ mainClassName = 'TelegramBotApp'
 
 jar {
     archiveFileName = "telegramBot.jar"
+
+    manifest {
+        attributes('Main-Class': 'TelegramBotApp')
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+//    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
 }
 
 tasks.register('release', Copy) {
     from './build/libs/telegramBot.jar'
     into './'
 }
-
 release.dependsOn jar
