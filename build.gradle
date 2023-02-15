@@ -58,6 +58,8 @@ test {
 mainClassName = 'TelegramBotApp'
 
 jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+
     archiveFileName = "telegramBot.jar"
 
     manifest {
