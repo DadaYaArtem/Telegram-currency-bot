@@ -68,11 +68,12 @@ jar {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 
-//    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+    doLast {
+        copy {
+            from '/build/libs/telegramBot.jar'
+            into './'
+        }
+    }
 }
 
-tasks.register('release', Copy) {
-    from './build/libs/telegramBot.jar'
-    into './'
-}
-release.dependsOn jar
+build.dependsOn jar
